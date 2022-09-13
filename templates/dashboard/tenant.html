@@ -1,0 +1,35 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+    {% block content %}
+    <h2>Register New Tenants</h2>
+    <form action="">
+        <label for="tenant_name">Tenant Name</label>
+        <input type="text">
+
+        <label for="tenant_id">National ID</label>
+        <input type="number">
+
+        <label for="tenant_email">Email Address</label>
+        <input type="email">
+
+        <label for="tenant_phonenumber">Phone Number</label>
+        <input type="text">
+
+        <label for="Physical_address">Physical Address</label>
+        <input type="text">
+
+        <label for="occupation">Occupation</label>
+        <input type="text">
+
+        <h4>Person to Contact Incase of Emergency</h4>
+        <label for="contact_person">Name</label>
+        <input type="text">
+
+        <label for="">Phone Number</label>
+        <input type="number">
+
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-danger">Cancel</button>
+    </form>
+    {% endblock content %}

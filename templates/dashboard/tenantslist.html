@@ -1,0 +1,37 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+    {% block content %}
+    <h2>All Tenants</h2>
+    <form action="">
+        <button type="button">Search</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Tenant Name</td>
+                <td>National ID</td>
+                <td>Phone Number</td>
+                <td>Email Address</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>22387912</td>
+                <td>+254700755312</td>
+                <td>john@doe.com</td>
+                <td><button class="btn btn-warning">Details</button></td>
+            </tr>
+        </tbody>
+
+    </table>
+    {% endblock content %}
+
+
+
+

@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartments</title>
+</head>
+<body>
+    {% block content %}
+    <h2>Register New Apartment</h2>
+    <form action="">
+        <label for="apartment_name">Apartment Name</label>
+        <input type="text">
+
+        <label for="apartment_type">Apartment Type</label>
+        <input type="text">
+
+        <label for="apartment_owner">Apartment Owner</label>
+        <input type="text">
+
+        <label for="apartment_town_location">Town Located</label>
+        <input type="text">
+
+        <label for="apartment_location">Apartment Location</label>
+        <input type="text">
+
+        <label for="apartment_description">Apartment Description</label>
+        <textarea name="apartment_description" id="" cols="30" rows="10"></textarea><br>
+
+        <label for="management_fee">Management Fee Percentage</label>
+        <input type="number">
+
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-danger">Cancel</button>
+    </form>
+    {% endblock content %}
+    
+</body>
+</html>
+

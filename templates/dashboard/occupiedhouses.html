@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+    
+        <div class="container">
+            <h5>Occupied Houses</h5>
+            <form action="">
+                <button type="button" class="btn btn-primary">Search</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Apartment</td>
+                        <td>House Number</td>
+                        <td>Monthly Rent</td>
+                        <td>House Type</td>
+                        <td>Description</td>
+                        <td>Date created</td>
+                        <td>Action</td>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>Hekima Apartment</td>
+                            <td>12</td>
+                            <td>10000</td>
+                            <td>one Bedroom</td>
+                            <td>A one bedroom house</td>
+                            <td>01/10/2022</td>
+                            <td><button class="btn btn-success">Vacate Tenant</button></td>
+                        </tr>
+                    </tbody>
+    
+                </thead>
+    
+    
+            </table>
+        </div>
+
+    </div>
+    
+</div>
+{% endblock content %}

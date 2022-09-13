@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+    
+        <div class="container">
+            <h5>Registered Houses</h5>
+            <form action="">
+                <button type="button" class="btn btn-primary">Search</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Apartment</td>
+                        <td>House Number</td>
+                        <td>Monthly Rent</td>
+                        <td>Deposit</td>
+                        <td>House Type</td>
+                        <td>Description</td>
+                        <td>Date created</td>
+                        <td>Action</td>
+                        <td>Action</td>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>Hekima Apartment</td>
+                            <td>12</td>
+                            <td>10,000</td>
+                            <td>10,000</td>
+                            <td>One Bedroom</td>
+                            <td>A one bedroom house</td>
+                            <td>01/01/20222</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                    </tbody>
+    
+                </thead>
+    
+    
+            </table>
+        </div>
+
+    </div>
+    
+</div>
+{% endblock content %}
+    

@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+<h4>Attach House to Apartment</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 border">
+            <form action="">
+                <label for="">Apartment Name</label><br>
+                <input type="text"><br>
+    
+                <label for="">House No</label><br>
+                <input type="text"><br>
+    
+                <label for="">Monthly Rent</label><br>
+                <input type="number"><br>
+    
+                <label for="">Deposit Amount</label><br>
+                <input type="number"><br>
+    
+                <label for="">House Type</label><br>
+                <input type="text"><br>
+    
+                <label for=""> Description</label><br>
+                <textarea name="" id="" cols="30" rows="5"></textarea><br>
+    
+                <button type="submit" class="btn btn-primary">Submit</button><br>
+    
+            </form>
+        </div>
+    
+        <div class="col-md-8 border">
+            <h5>Filter Houses Per Apartment,Number or Type</h5>
+            <form action="">
+                <button type="button" class="btn btn-primary">Search</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Apartment</td>
+                        <td>House Number</td>
+                        <td>Monthly Rent</td>
+                        <td>House Type</td>
+                        <td>Description</td>
+                        <td>Date created</td>
+                        <td>Action</td>
+                        <td>Action</td>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                    </tbody>
+    
+                </thead>
+    
+    
+            </table>
+        </div>
+
+    </div>
+    
+</div>
+{% endblock content %}
