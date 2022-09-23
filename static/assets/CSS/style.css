@@ -63,7 +63,7 @@ body{
     transition: 0.3s ease;
 }
 #interface{
-    width: calc(100%-300px);
+    width: 100%;
     margin-left: 300px;
     position: relative;
 }
@@ -95,7 +95,7 @@ body{
 }
 #interface .navigation .profile{
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
 }
 

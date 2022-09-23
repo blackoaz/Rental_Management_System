@@ -1,30 +1,24 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h4>Attach House to Apartment</h4>
+{% for message in messages %}
+    <h5>{{message}}</h5>
+    {% endfor %}
 <div class="container">
     <div class="row">
         <div class="col-md-4 border">
-            <form action="">
-                <label for="">Apartment Name</label><br>
-                <input type="text"><br>
-    
-                <label for="">House No</label><br>
-                <input type="text"><br>
-    
-                <label for="">Monthly Rent</label><br>
-                <input type="number"><br>
-    
-                <label for="">Deposit Amount</label><br>
-                <input type="number"><br>
-    
-                <label for="">House Type</label><br>
-                <input type="text"><br>
-    
-                <label for=""> Description</label><br>
-                <textarea name="" id="" cols="30" rows="5"></textarea><br>
-    
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.apartment|as_crispy_field}}
+                {{form.house_no|as_crispy_field}}
+                {{form.monthly_rent|as_crispy_field}}
+                {{form.deposit|as_crispy_field}}
+                {{form.house_type|as_crispy_field}}
+                {{form.descption|as_crispy_field}}<br>
+                
                 <button type="submit" class="btn btn-primary">Submit</button><br>
     
             </form>
@@ -32,32 +26,46 @@
     
         <div class="col-md-8 border">
             <h5>Filter Houses Per Apartment,Number or Type</h5>
-            <form action="">
-                <button type="button" class="btn btn-primary">Search</button>
-            </form>
+            
+                <form method="get">
+                    <div class="row">
+                        <div class="col-md-4">{{ myFilter.form.apartment|as_crispy_field}}</div>
+                        <div class="col-md-4">{{ myFilter.form.house_no|as_crispy_field}}</div>
+                        <div class="col-md-4">{{ myFilter.form.house_type|as_crispy_field}}</div>
+                    </div><br>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
             <table class="table">
                 <thead>
                     <tr>
                         <td>Apartment</td>
                         <td>House Number</td>
                         <td>Monthly Rent</td>
+                        <td>House Deposit</td>
                         <td>House Type</td>
-                        <td>Description</td>
+                        <!-- <td>Description</td> -->
                         <td>Date created</td>
                         <td>Action</td>
                         <td>Action</td>
                     </tr>
                     <tbody>
+                        {% for house in myFilter.qs %}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Edit</td>
-                            <td>Delete</td>
+                            <td>{{house.apartment}}</td>
+                            <td>{{house.house_no}}</td>
+                            <td>{{house.monthly_rent}}</td>
+                            <td>{{house.deposit}}</td>
+                            <td>{{house.house_type}}</td>
+                            <!-- <td>{{house.descption}}</td> -->
+                            <td>Date created</td>
+                            <td><a href="#" class="btn text-secondary px-0">
+                                <i class="fa fa-edit fa-lg"></i>
+                            </a></td>
+                            <td><a href="#" class="btn text-danger px-0">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </a></td>
                         </tr>
+                        {% endfor %}
                     </tbody>
     
                 </thead>

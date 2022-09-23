@@ -1,43 +1,35 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apartments</title>
-</head>
-<body>
+{% load crispy_forms_tags %}
+
     {% block content %}
-    <h2>Register New Apartment</h2>
-    <form action="">
-        <label for="apartment_name">Apartment Name</label>
-        <input type="text">
-
-        <label for="apartment_type">Apartment Type</label>
-        <input type="text">
-
-        <label for="apartment_owner">Apartment Owner</label>
-        <input type="text">
-
-        <label for="apartment_town_location">Town Located</label>
-        <input type="text">
-
-        <label for="apartment_location">Apartment Location</label>
-        <input type="text">
-
-        <label for="apartment_description">Apartment Description</label>
-        <textarea name="apartment_description" id="" cols="30" rows="10"></textarea><br>
-
-        <label for="management_fee">Management Fee Percentage</label>
-        <input type="number">
-
+    {% for message in messages %}
+    <h2>{{message}}</h2>
+    {% endfor %}
+    <div class="container">
+        <h2>Register New Apartment</h2>
+    <form action="{% url 'apartments' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">{{form.apartment_name|as_crispy_field}}</div>
+            <div class="col-md-6">{{form.apartment_owner|as_crispy_field}}</div>
+            <div class="col-md-6">{{form.apartment_type|as_crispy_field}}</div>
+            <div class="col-md-6">{{form.image|as_crispy_field}}</div>
+            <div class="col-md-6">{{form.town_located|as_crispy_field}}</div>
+            <div class="col-md-6">{{form.apartment_location|as_crispy_field}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{form.apartment_description|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.management_fee|as_crispy_field}}</div>
+        </div><br>
+        
         <button type="submit" class="btn btn-success">Submit</button>
         <button type="button" class="btn btn-danger">Cancel</button>
     </form>
+
+    </div>
+    
     {% endblock content %}
     
-</body>
-</html>
+
 

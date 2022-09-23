@@ -1,9 +1,23 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 
     {% block content %}
-    <h2>Registered Landlords</h2>
+    <div class="container">
+        <h4>Filter for landlords Information</h4>
+        <form method="get">
+            <div class="row">
+                <div class="col-md-3">{{myFilter.form.f_name|as_crispy_field}}</div>
+                <div class="col-md-3">{{myFilter.form.l_name|as_crispy_field}}</div>
+                <div class="col-md-3">{{myFilter.form.Id_number|as_crispy_field}}</div>
+                <div class="col-md-3">{{myFilter.form.email_address|as_crispy_field}}</div>
+                <div class="col-md-2" style="margin-top: 22px;"><button class="btn btn-primary" type="submit">Search</button></div>
+
+            </div><br>
+            
+        </form>
+        <h2>Registered Landlords</h2>
     <table class="table">
         <thead>
             <tr>
@@ -16,17 +30,22 @@
             </tr>
         </thead>
         <tbody>
+            {% for landlord in myFilter.qs %}
             <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>+254700755312</td>
-                <td>john@doe.com</td>
-                <td>01/01/2022</td>
+                <td>{{landlord.f_name}}</td>
+                <td>{{landlord.l_name}}</td>
+                <td>{{landlord.phone_number}}</td>
+                <td>{{landlord.email_address}}</td>
+                <td>{{landlord.date_created}}</td>
                 <td><button class="btn btn-warning">Details</button></td>
             </tr>
+            {% endfor %}
         </tbody>
 
     </table>
+
+    </div>
+    
     {% endblock content %}
 
 

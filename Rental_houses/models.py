@@ -1,5 +1,9 @@
+import os
 from django.db import models
+from django.forms import NullBooleanField
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import RegexValidator
+from twilio.rest import Client
 
 # Create your models here.
 class Landlord(models.Model):
@@ -8,31 +12,42 @@ class Landlord(models.Model):
     Id_number = models.IntegerField()
     email_address = models.EmailField(unique=True, blank=True,null=True)
     phone_number = PhoneNumberField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.f_name + " " + self.l_name
 
 class Apartment(models.Model):
     APARTMENT_CHOICES = (
-        ('1-2 Bedroom Apartment','1-2 Bedroom Apartment'),
-        ('2-3 Bedroom Apartment','2-3 Bedroom Apartment'),
-        ('More than 3 bedroom','More than 3 bedroom'),
+        ('Bedsitter','Bedsitter'),
+        ('One Bedroom','One Bedroom'),
+        ('Two Bedroom','Two Bedroom'),
+        ('Three Bedroom','Three Bedroom'),
+        ('One and Two Bedroom','One and Two Bedroom')
 
     )
-    apartment_name = models.CharField(max_length=250)
+    apartment_name = models.CharField(max_length=250,unique=True)
     apartment_owner = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     apartment_type  = models.CharField(max_length=100,choices= APARTMENT_CHOICES) 
-    apartment_description = models.TextField()
+    apartment_description = models.CharField(max_length=250)
     image = models.ImageField(null=True,blank = True)
     town_located = models.CharField(max_length=50)
     apartment_location = models.CharField(max_length=50)
     management_fee = models.DecimalField(max_digits=5,decimal_places=2)
+    date_created = models.DateTimeField(auto_now_add=True)
+    Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.apartment_name
 
 class Houses(models.Model):
+    OCCUPANCY_CHOICES = (
+        ('Occupied','Occupied'),
+        ('Vacant','Vacant')
+    )
     HOUSE_CHOICES = (
+        ('Bedsitter','Bedsitter'),
         ('1 Bedroom','1 Bedroom'),
         ('2 Bedroom','2 Bedroom'),
         ('3 Bedroom','3 Bedroom'),
@@ -43,7 +58,10 @@ class Houses(models.Model):
     monthly_rent = models.DecimalField(max_digits=10,decimal_places=2)
     deposit = models.DecimalField(max_digits=10,decimal_places=2)
     house_type  = models.CharField(max_length=100,choices=HOUSE_CHOICES) 
-    descption = models.TextField()  
+    descption = models.CharField(max_length=250,blank=True,null=True) 
+    occupancy = models.CharField(max_length=50,choices=OCCUPANCY_CHOICES,default='Vacant')
+    date_created = models.DateTimeField(auto_now_add=True)
+    Updated = models.DateTimeField(auto_now=True) 
 
     class Meta:
         verbose_name = ("Houses")
@@ -61,6 +79,8 @@ class Tenant(models.Model):
     Occupation = models.CharField(max_length=150)
     emergency_person_name = models.CharField(max_length=250)
     emergency_person_contact = PhoneNumberField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.tenant_name
@@ -70,9 +90,11 @@ class Allocate_House(models.Model):
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
     house = models.ForeignKey(Houses,on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+    Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.tenant)
+        return f'{self.tenant} has rented house number {self.house} from {self.apartment}'
 
 class Invoice(models.Model):
     PAYMENT_STATUS = (
@@ -99,10 +121,24 @@ class Invoice(models.Model):
     month = models.CharField(max_length=20,choices=MONTH_CHOICES)
     rent = models.PositiveIntegerField(default = 0)
     payment_status = models.CharField(max_length=50,choices=PAYMENT_STATUS, default='unpaid')
+    date_created = models.DateTimeField(auto_now_add=True)
+    Updated = models.DateTimeField(auto_now=True)
 
 
     def save(self,*args, **kwargs):
         self.rent = self.house.monthly_rent
+        account_sid = os.getenv('account_sid')
+        auth_token = os.getenv('auth_token')
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+                            body=f"Hello, {self.tenant.tenant_name} your rent for the month of {self.month} is {self.rent}, \
+                                Regards Blackoaz Rental Agency",
+                            from_='+15736523274',
+                            to=f'{self.tenant.phoneNumber}'
+                        )
+
+        print(message.sid)
         return super().save(*args, **kwargs)
 
     def __str__(self):

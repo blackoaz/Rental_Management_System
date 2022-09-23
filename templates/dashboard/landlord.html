@@ -1,30 +1,29 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
-
+{% load crispy_forms_tags %}
 
     {% block content %}
-    <h2>Register New Landlord</h2>
-    <form action="">
-        <label for="f_name">First Name:</label>
-        <input type="text">
-        <label for="l_name">Last Name:</label>
-        <input type="text">
-        <label for="email">Email Adress:</label>
-        <input type="email">
-
-        <label for="phone_no">Phone Number:</label>
-        <input type="number">
-
-        <label for="id_number">ID Number:</label>
-        <input type="number">
-
-        <label for="apartment">Name of Apartment:</label>
-        <input type="text">
+    <div class="container">
+        <h2>Register New Landlord</h2>
+    <form action="{% url 'landlord' %}" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">{{form.f_name|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.l_name|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.Id_number|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.email_address|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.phone_number|as_crispy_field}}</div>
+        </div>
+        
+        <br>
 
         <button type="submit" class="btn btn-success">Submit</button>
         <button type="button" class="btn btn-danger">Cancel</button>
 
     </form>
+        
+    </div>
+    
     {% endblock content %}
 
 

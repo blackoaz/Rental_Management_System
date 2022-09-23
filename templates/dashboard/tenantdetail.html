@@ -1,0 +1,36 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div><h1>Tenant:{{tenant.tenant_name}}</h1></div>
+    <p>This member was registered on {{tenant.date_created}}</p>
+        <div class="row">
+            <div class="col-md-8 border" style="background-color: rgb(253, 253, 121);">
+                <h4>Tenant Information</h4>
+                <ul>
+                    <li><b>Id Number: </b>{{tenant.national_Id}}</li>
+                    <li><b>Email Adress: </b>{{tenant.email_address}}</li>
+                    <li><b>Phone Number: </b>{{tenant.phoneNumber}}</li>
+                    <li><b>Physical Address: </b>{{tenant.physical_Adress}}</li>
+                    <li><b>Occupation: </b>{{tenant.Occupation}}</li>
+                </ul>    
+                    <hr>
+                    <div><h4>Emergency Contact Person</h4></div>
+                <ul> 
+                    <li><b>Contact Person: </b>{{tenant.emergency_person_name}}</li>
+                    <li><b>Phone Number: </b>{{tenant.emergency_person_contact}}</li>
+                </ul>     
+                
+            </div>
+            <div class="col-md-4">
+                <div class="container border">
+                    <h4>Tenant Invoices</h4>
+                </div>
+                
+
+            </div>
+        </div>
+</div>
+{% endblock content %}

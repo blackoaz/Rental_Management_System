@@ -15,20 +15,21 @@
                         <td>House Number</td>
                         <td>Monthly Rent</td>
                         <td>House Type</td>
-                        <td>Description</td>
                         <td>Date created</td>
                         <td>Action</td>
                     </tr>
                     <tbody>
+                        {% for house in houses %}
                         <tr>
-                            <td>Hekima Apartment</td>
-                            <td>12</td>
-                            <td>10000</td>
-                            <td>one Bedroom</td>
-                            <td>A one bedroom house</td>
-                            <td>01/10/2022</td>
-                            <td><button class="btn btn-success">Place Tenant</button></td>
+                            <td>{{house.apartment}}</td>
+                            <td>{{house.house_no}}</td>
+                            <td>{{house.monthly_rent}}</td>
+                            <td>{{house.house_type}}</td>
+                            <td>{{house.deposit}}</td>
+                            <td>Date created</td>
+                            <td><a href="{% url 'assignhouses' house.id %}"><button class="btn btn-success">Place Tenant</button></a></td>
                         </tr>
+                        {% endfor %}
                     </tbody>
     
                 </thead>

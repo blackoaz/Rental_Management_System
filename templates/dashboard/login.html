@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets/CSS/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Login User </title>
+</head>
+<body>
+    <div class="container">
+    <h1 style="text-align: center;">BLACKOAZ RMS</h1>
+    
+        <form action="{% url 'login' %}" method="POST" autocomplete="off" style="text-align: center;">
+            <h4>Login Into Your Account</h4><br>
+            {% csrf_token %}
+            <div class="card" style="align-content: center;">
+                <div class="user">
+                    <label for="">ENTER YOUR USERNAME</label>
+                    <p>{{form.username}}</p>
+                    <!-- <input type="text"> -->
+                </div>
+                <div class="password">
+                    <label for="">ENTER YOUR PASSWORD</label>
+                    <p>{{form.password}}</p>
+                    <!-- <input type="password"> -->
+                </div>
+                <div class="btn-text-center">
+                    <input type="submit" type="button" class="btn btn-primary" value="Sign in">
+              </div>
+              <div>
+            </div>
+            
+            <style>
+                h5{
+                    color: rgb(0, 238, 255);
+                }
+            </style>
+            {% for message in messages %}
+                <h5>{{ message }}</h5>
+            {% endfor %}
+        </div>
+          <p>if you dont have an account <a href="{% url 'register_user' %}">Register here</a></p>
+         
+        </form>
+    
+
+    </div>
+    
+</body>
+</html>

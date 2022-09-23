@@ -1,35 +1,31 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
     {% block content %}
-    <h2>Register New Tenants</h2>
-    <form action="">
-        <label for="tenant_name">Tenant Name</label>
-        <input type="text">
-
-        <label for="tenant_id">National ID</label>
-        <input type="number">
-
-        <label for="tenant_email">Email Address</label>
-        <input type="email">
-
-        <label for="tenant_phonenumber">Phone Number</label>
-        <input type="text">
-
-        <label for="Physical_address">Physical Address</label>
-        <input type="text">
-
-        <label for="occupation">Occupation</label>
-        <input type="text">
+    <div class="container">
+        <h2>Register New Tenants</h2>
+    <form action="{% url 'tenants' %}" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">{{form.tenant_name|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.national_Id|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.email_address|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.phoneNumber|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.physical_Adress|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.Occupation|as_crispy_field}}</div>
+        </div><br>
 
         <h4>Person to Contact Incase of Emergency</h4>
-        <label for="contact_person">Name</label>
-        <input type="text">
-
-        <label for="">Phone Number</label>
-        <input type="number">
+        <div class="row">
+            <div class="col-md-4">{{form.emergency_person_name|as_crispy_field}}</div>
+            <div class="col-md-4">{{form.emergency_person_contact|as_crispy_field}}</div>
+        </div><br>
 
         <button type="submit" class="btn btn-success">Submit</button>
         <button type="button" class="btn btn-danger">Cancel</button>
     </form>
+
+    </div>
+    
     {% endblock content %}

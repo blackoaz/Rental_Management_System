@@ -1,35 +1,60 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 
     {% block content %}
+    {% for message in messages %}
+    <h4>{{message}}</h4>
+    {% endfor %}
     <h2>All Tenants</h2>
-    <form action="">
-        <button type="button">Search</button>
-    </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Tenant Name</td>
-                <td>National ID</td>
-                <td>Phone Number</td>
-                <td>Email Address</td>
-                <td>Action</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>22387912</td>
-                <td>+254700755312</td>
-                <td>john@doe.com</td>
-                <td><button class="btn btn-warning">Details</button></td>
-            </tr>
-        </tbody>
+    <div class="container">
+        <h4>Search For Specific Tenant Based on Any of the Fields</h4>
+        <form method="get">
+            <div class="row">
+                <div class="col-md-4">{{ myFilter.form.tenant_name|as_crispy_field}}</div>
+                <div class="col-md-4">{{ myFilter.form.national_Id|as_crispy_field}}</div>
+                <div class="col-md-4">{{ myFilter.form.phoneNumber|as_crispy_field}}</div>
+            </div><br>
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Tenant Name</td>
+                    <td>National ID</td>
+                    <td>Email Address</td>
+                    <td>Phone Number</td>
+                    <td>Physical Address</td>
+                    <td>Occupation</td>
+                    <td>Emergency Contact</td>
+                    <td>Emergency Contact</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tenant in myFilter.qs %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{tenant.tenant_name}}</td>
+                    <td>{{tenant.national_Id }}</td>
+                    <td>{{tenant.email_address}}</td>
+                    <td>{{tenant.phoneNumber}}</td>
+                    <td>{{tenant.physical_Adress}}</td>
+                    <td>{{tenant.Occupation}}</td>
+                    <td>{{tenant.emergency_person_name}}</td>
+                    <td>{{tenant.emergency_person_contact}}</td>
+                    <td><a href="{% url 'tenant_details' tenant.id %}"><button class="btn btn-warning">Details</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
 
-    </table>
+    </div>
+    
     {% endblock content %}
 
 

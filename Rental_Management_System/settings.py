@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from ensurepip import bootstrap
 from pathlib import Path
 import os
 
@@ -42,10 +43,14 @@ INSTALLED_APPS = [
     #userapps
     'Rental_houses',
     'users',
+    # 'Rental_houses.booking_functions',
 
     #thirdpartyApp
     'phonenumber_field',
+    'crispy_forms',
+    'django_filters',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

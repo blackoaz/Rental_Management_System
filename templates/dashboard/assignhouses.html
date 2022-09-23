@@ -1,8 +1,70 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+<div class="container">
+    <h5>Room Details</h5>
+    <div class="row">
+        <div class="col-md-3">{{ form.apartment|as_crispy_field }}</div>
+        <div class="col-md-3">{{ form.house_no|as_crispy_field }}</div>
+        <div class="col-md-3">{{ form.monthly_rent|as_crispy_field }}</div>
+        <div class="col-md-3">{{ form.house_type|as_crispy_field }}</div>
+    </div><br>
+   <div class="row">
+        <div class="col-md-12">
+            <form action="" autocomplete="off" >
+                <label for="tenant">Enter Tenant Id</label><br>
+                <input id="search-btn" type="search"  name="q" placeholder="Search Tenant using Id e.g. 1" style="width: 940px; align-items: centre; height: 40px;border-radius: 6px;padding-left: 450px">
+                <button  id="submit-btn" type="submit" style="background-color: grey; width: 96px; color: white;height: 40px;border-radius: 6px">Search</button>
+
+            </form>
+        </div>
+   </div><br>
+    
     
         <div class="container">
-            <h5>Assign Houses</h5>
+            <div class="row">
+                <div class="col-md-6 border" style="background-color: rgb(253, 253, 121);">
+                    <h4>Tenant Information</h4>
+                    {% for tenant in tenants %}
+                    <ul>
+                        <li><b>Tenant Name: </b>{{tenant.tenant_name}}</li>
+                        <li><b>Id Number: </b>{{tenant.national_Id}}</li>
+                        <li><b>Email Adress: </b>{{tenant.email_address}}</li>
+                        <li><b>Phone Number: </b>{{tenant.phoneNumber}}</li>
+                        <li><b>Physical Address: </b>{{tenant.physical_Adress}}</li>
+                        <li><b>Occupation: </b>{{tenant.Occupation}}</li>
+                    </ul>    
+                        <hr>
+                        <div><h4>Emergency Contact Person</h4></div>
+                    <ul> 
+                        <li><b>Contact Person: </b>{{tenant.emergency_person_name}}</li>
+                        <li><b>Phone Number: </b>{{tenant.emergency_person_contact}}</li>
+                    </ul>     
+                    {% endfor %}
+
+                </div>
+                <div class="col-md-6">
+                    <form action="{% url 'allocate_house' house.id %}" method="post">
+                        <h4>Room Allocation</h4>
+                        {% csrf_token %}
+                        <p>Allocate house</p>
+                        <p>{{form.house_no}}</p>
+                        <p>Apartment</p>
+                        <p>{{form.apartment}}</p>
+                        <p>to tenant</p>
+                        {{form.tenant}}
+                        <br>
+                        <button type="submit" style="text-align: center; width: 100%; background: green; height: 30px;border-radius: 4px;">Allocate Room</button>
+
+                    </form>
+                    
+                </div>
+        </div>   
+
+</div>
+<script src="{% static 'assets/js/jquery-3.6.1.min.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
 {% endblock content %}
