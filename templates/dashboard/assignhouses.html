@@ -15,8 +15,8 @@
         <div class="col-md-12">
             <form action="" autocomplete="off" >
                 <label for="tenant">Enter Tenant Id</label><br>
-                <input id="search-btn" type="search"  name="q" placeholder="Search Tenant using Id e.g. 1" style="width: 940px; align-items: centre; height: 40px;border-radius: 6px;padding-left: 450px">
-                <button  id="submit-btn" type="submit" style="background-color: grey; width: 96px; color: white;height: 40px;border-radius: 6px">Search</button>
+                <input id="search-btn" type="search"  name="q" placeholder="Search Tenant using Id e.g. 1" style="width: 900px; align-items: centre; height: 40px;border-radius: 6px;padding-left: 450px">
+                <button  id="submit-btn" type="submit" style="background-color: grey; width: 90px; color: white;height: 40px;border-radius: 6px">Search</button>
 
             </form>
         </div>
@@ -46,15 +46,15 @@
 
                 </div>
                 <div class="col-md-6">
-                    <form action="{% url 'allocate_house' house.id %}" method="post">
+                    <form action="{% url 'assignhouses' house.id %}" method="post">
                         <h4>Room Allocation</h4>
                         {% csrf_token %}
                         <p>Allocate house</p>
-                        <p>{{form.house_no}}</p>
+                        <p>{{form_2.tenant|as_crispy_field}}</p>
                         <p>Apartment</p>
-                        <p>{{form.apartment}}</p>
+                        <p>{{form_2.apartment|as_crispy_field}}</p>
                         <p>to tenant</p>
-                        {{form.tenant}}
+                        <p>{{form_2.house|as_crispy_field}}</p>
                         <br>
                         <button type="submit" style="text-align: center; width: 100%; background: green; height: 30px;border-radius: 4px;">Allocate Room</button>
 

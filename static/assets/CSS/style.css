@@ -140,6 +140,7 @@ body{
     border-radius: 50%;
     text-align: center;
     color: #fff;
+    align-items: center;
 }
 .values .val-box:nth-child(1) i{
     background: #7874ec;

@@ -1,0 +1,25 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h1>Update House Details</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 border">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.apartment|as_crispy_field}}
+                {{form.house_no|as_crispy_field}}
+                {{form.monthly_rent|as_crispy_field}}
+                {{form.deposit|as_crispy_field}}
+                {{form.house_type|as_crispy_field}}
+                {{form.descption|as_crispy_field}}<br>
+                
+                <button type="submit" class="btn btn-primary">Update</button><br>
+    
+            </form>
+        </div>
+
+{% endblock content %}

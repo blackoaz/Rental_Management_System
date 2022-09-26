@@ -99,7 +99,8 @@ def apartment(request):
 @login_required(login_url='login')
 def house(request):
     houses = Houses.objects.all()
-    context = {'houses':houses}
+    myFilter = HousesFilter(request.GET,queryset=houses)
+    context = {'houses':houses,'myFilter':myFilter}
     return render(request,'dashboard/house.html',context)
 
 @login_required(login_url='login')
@@ -126,7 +127,7 @@ def landlords(request):
 def add_houses(request):
     houses = Houses.objects.all()
     myFilter = HousesFilter(request.GET,queryset=houses)
-    form = HousesForm
+    form = HousesForm()
     if request.method == 'POST':
         form = HousesForm(request.POST)
         if form.is_valid():
@@ -139,28 +140,67 @@ def add_houses(request):
     return render(request,'dashboard/addhouses.html',context)
 
 @login_required(login_url='login')
+def update_house(request,pk=0):
+    if request.method == 'GET':
+        if id == 0:
+            form = HousesForm()
+        else:
+            house = Houses.objects.get(id=pk)
+            form = HousesForm(instance=house)
+
+        context = {'form':form}    
+        return render(request,'dashboard/update_house.html',context)        
+    else:
+        form = HousesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('addhouses')    
+
+@login_required(login_url='login')    
+def delete_house(request,pk=0):
+    house = Houses.objects.get(id=pk)
+    if request.method == 'POST':
+        house.delete()
+        return redirect('addhouses')
+    context = {'house':house}
+    return render(request, 'dashboard/deletehouse.html',context)    
+
+@login_required(login_url='login')
+def update_apartment(request,pk=0):
+    form = ApartmentForm()       
+    apartment = Apartment.objects.get(id=pk)
+    form = ApartmentForm(instance=apartment)
+    if request.method == 'POST':
+        #print("printing Post",request.POST)
+        form = ApartmentForm(request.POST,instance=apartment)
+        if form.is_valid():
+            form.save()
+            return redirect('apartmentlist')
+    context = {'form':form}   
+    return render(request,'dashboard/update_apartment.html',context)        
+    
+
+
+@login_required(login_url='login')
 def assignhouses(request,id):
+    form_2 = Allocate_HouseForm()
+    if request.method == 'POST':
+        form = Allocate_HouseForm(request.POST)
+        if form.is_valid:
+            form.save()
+            Houses.objects.filter(pk=id).update(occupancy='Occupied')
+            return redirect('occupiedhouses')
     if 'q' in request.GET:
         q = request.GET['q']
         tenants = Tenant.objects.filter(id__icontains=q)
     else:
        tenants = ' '
-
+    
     house = Houses.objects.get(pk=id)
     form = HousesForm(instance=house)
     
-    #form = Allocate_HouseForm()
     #allocate_house = Allocate_House.objects.all()
-            # available_list = []
-            # houses = Houses.objects.filter(house_no=house)
-            # for house in houses:
-            #     if house.occupancy == 'Vacant':
-            #         available_list.append(True)
-            #     else:
-            #         available_list.append(False)
-
-            # return all(available_list)
-    context = {'form':form,'house':house,'tenants':tenants,'form':form}
+    context = {'form':form,'house':house,'tenants':tenants,'form_2':form_2}
     return render(request,'dashboard/assignhouses.html',context)
 
 @login_required(login_url='login')
@@ -179,14 +219,15 @@ def tenantlist(request):
 
 @login_required(login_url='login')
 def vacanthouses(request):
-    houses = Houses.objects.filter(occupancy='Vacant') 
-    context = {'houses':houses}
+    houses = Houses.objects.filter(occupancy='Vacant')
+    myFilter = HousesFilter(request.GET,queryset=houses) 
+    context = {'houses':houses,'myFilter':myFilter}
     return render(request,'dashboard/vacanthouses.html',context)
 
 @login_required(login_url='login')
 def occupiedhouses(request):
-    houses = Houses.objects.filter(occupancy='Occupied')
-    myFilter = HousesFilter(request.GET,queryset=houses) 
+    houses = Allocate_House.objects.all()
+    myFilter = Allocate_houseFilter(request.GET,queryset=houses) 
     context = {'houses':houses,'myFilter':myFilter}
     return render(request,'dashboard/occupiedhouses.html',context)
 
@@ -195,22 +236,22 @@ def tenant_details(request,id):
     context = {'tenant':get_object_or_404(Tenant,pk=id)}
     return render(request,'dashboard/tenantdetail.html',context)
 
-@login_required(login_url='login')
-def allocate_house(request,id):
-    form = Allocate_HouseForm()
-    allocate_house = Allocate_House.objects.all()
-    available_list = []
-    houses = Houses.objects.filter(house_no=house)
-    Houses.objects.filter(pk=id).update(occupancy='Occupied') 
-    for house in houses:
-        if house.occupancy == 'Vacant':
-            available_list.append(True)
-        else:
-            available_list.append(False)
+# @login_required(login_url='login')
+# def allocate_house(request,id):
+#     form = Allocate_HouseForm()
+#     allocate_house = Allocate_House.objects.all()
+#     available_list = []
+#     houses = Houses.objects.filter(house_no=house)
+#     Houses.objects.filter(pk=id).update(occupancy='Occupied') 
+#     for house in houses:
+#         if house.occupancy == 'Vacant':
+#             available_list.append(True)
+#         else:
+#             available_list.append(False)
 
-            return all(available_list)
+#             return all(available_list)
 
-        return redirect('occupiedhouses')
+#         return redirect('occupiedhouses')
 
 # def render_pdf_view(request):
 #     template_path = 'user_printer.html'

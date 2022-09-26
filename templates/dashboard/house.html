@@ -1,12 +1,18 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     
         <div class="container">
             <h5>Registered Houses</h5>
-            <form action="">
-                <button type="button" class="btn btn-primary">Search</button>
+            <form action="" method="get">
+                <div class="row">
+                    <div class="col-md-4">{{ myFilter.form.apartment|as_crispy_field}}</div>
+                    <div class="col-md-4">{{ myFilter.form.house_no|as_crispy_field}}</div>
+                    <div class="col-md-4">{{ myFilter.form.house_type|as_crispy_field}}</div>
+                </div><br>
+                <button type="submit" class="btn btn-primary">Search</button>
             </form>
             <table class="table table-borderless">
                 <thead class="border-bottom font-weight-bold">
@@ -21,7 +27,7 @@
                         <td></td>
                     </tr>
                     <tbody>
-                        {% for house in houses %}
+                        {% for house in myFilter.qs %}
                         <tr>
                             <td>{{house.apartment}}</td>
                             <td>{{house.house_no}}</td>
@@ -29,11 +35,11 @@
                             <td>{{house.deposit}}</td>
                             <td>{{house.house_type}}</td>
                             <!-- <td>{{house.descption}}</td> -->
-                            <td>Date created</td>
-                            <td><a href="#" class="btn text-secondary px-0">
+                            <td>{{house.date_created}}</td>
+                            <td><a href="{% url 'updatehouse' house.id %}" class="btn text-secondary px-0">
                                 <i class="fa fa-edit fa-lg"></i>
                             </a></td>
-                            <td><a href="#" class="btn text-danger px-0">
+                            <td><a href="{% url 'deletehouse' house.id %}" class="btn text-danger px-0">
                                 <i class="fa fa-trash fa-lg"></i>
                             </a></td>
                         </tr>

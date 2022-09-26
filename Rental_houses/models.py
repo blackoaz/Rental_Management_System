@@ -20,12 +20,10 @@ class Landlord(models.Model):
 
 class Apartment(models.Model):
     APARTMENT_CHOICES = (
-        ('Bedsitter','Bedsitter'),
-        ('One Bedroom','One Bedroom'),
-        ('Two Bedroom','Two Bedroom'),
-        ('Three Bedroom','Three Bedroom'),
-        ('One and Two Bedroom','One and Two Bedroom')
-
+        ('Flats','Flats'),
+        ('Bungalow','Bungalow'),
+        ('Mansionaite','Mansionaite'),
+      
     )
     apartment_name = models.CharField(max_length=250,unique=True)
     apartment_owner = models.ForeignKey(Landlord, on_delete=models.CASCADE)
@@ -92,6 +90,16 @@ class Allocate_House(models.Model):
     house = models.ForeignKey(Houses,on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
+
+    # def save(self,*args, **kwargs):
+    #     available_list = []
+    #     house = Houses.objects.filter(house_no=house)
+    #     for house in house:
+    #         if house.occupancy == 'Vacant':
+    #             available_list.append(True)
+    #         else:
+    #             available_list.append(False)
+    #     return super().save(*args,**kwargs)
 
     def __str__(self):
         return f'{self.tenant} has rented house number {self.house} from {self.apartment}'

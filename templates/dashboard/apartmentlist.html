@@ -25,8 +25,7 @@
                         <td>Town Located</td>
                         <td>Apartment Location</td>
                         <td>Management Fee Percentage(%)</td>
-                        <td></td>
-                        <td></td>
+                        <td>Action</td>
                     </tr>
                     <tbody>
                         {% for apartment in myFilter.qs %}
@@ -38,7 +37,7 @@
                             <td>{{apartment.town_located}}</td>
                             <td>{{apartment.apartment_location}}</td>
                             <td>{{apartment.management_fee}}</td>
-                            <td><a href="#" class="btn text-secondary px-0">
+                            <td><a href="{% url 'updateapartment' apartment.id %}" class="btn text-secondary px-0">
                                 <i class="fa fa-edit fa-lg"></i>
                             </a></td>
                             <td><a href="#" class="btn text-secondary px-0">

@@ -58,10 +58,10 @@
                             <td>{{house.house_type}}</td>
                             <!-- <td>{{house.descption}}</td> -->
                             <td>Date created</td>
-                            <td><a href="#" class="btn text-secondary px-0">
+                            <td><a href="{% url 'updatehouse' house.id %}" class="btn text-secondary px-0">
                                 <i class="fa fa-edit fa-lg"></i>
                             </a></td>
-                            <td><a href="#" class="btn text-danger px-0">
+                            <td><a href="{% url 'deletehouse' house.id %}" class="btn text-danger px-0">
                                 <i class="fa fa-trash fa-lg"></i>
                             </a></td>
                         </tr>
