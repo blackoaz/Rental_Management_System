@@ -1,0 +1,20 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!-- {% load crispy_forms_tags %} -->
+
+
+{% block content %}
+<div class="container">
+    <h1>Generate Invoice</h1>
+    <form action=" " method="post">
+        {% csrf_token %}
+        <div>{{form|crispy}}</div><br>
+        
+        
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
+
+</div>
+
+{% endblock content %}

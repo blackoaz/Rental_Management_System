@@ -50,11 +50,12 @@
                         <h4>Room Allocation</h4>
                         {% csrf_token %}
                         <p>Allocate house</p>
-                        <p>{{form_2.tenant|as_crispy_field}}</p>
+                        <p>{{form_2.house|as_crispy_field}}</p>
                         <p>Apartment</p>
                         <p>{{form_2.apartment|as_crispy_field}}</p>
                         <p>to tenant</p>
-                        <p>{{form_2.house|as_crispy_field}}</p>
+                        <p>{{form_2.tenant|as_crispy_field}}</p>
+                        
                         <br>
                         <button type="submit" style="text-align: center; width: 100%; background: green; height: 30px;border-radius: 4px;">Allocate Room</button>
 

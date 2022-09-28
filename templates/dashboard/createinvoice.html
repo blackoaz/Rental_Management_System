@@ -1,0 +1,49 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+        <div class="container">
+            <h5>Registered Houses for Invoicing</h5>
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">{{ myFilter.form.apartment|as_crispy_field}}</div>
+                    <div class="col-md-4">{{ myFilter.form.tenant|as_crispy_field}}</div>
+                    <div class="col-md-4">{{ myFilter.form.house|as_crispy_field}}</div>
+                </div><br>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><b>Apartment</b></td>
+                        <td><b>House Number</b></td>
+                        <td><b>Tenant Name</b></td>
+                        <td><b>Monthly Rent</b></td>
+                        <td><b>House Type</b></td>
+                        <td><b>Action</b></td>
+                    </tr>
+                    <tbody>
+                        {% for house in myFilter.qs %}
+                        <tr>
+                            <td>{{house.apartment}}</td>
+                            <td>{{house.house.house_no}}</td>
+                            <td>{{house.tenant.tenant_name}}</td>
+                            <td>{{house.house.monthly_rent}}</td>
+                            <td>{{house.house.house_type}}</td>
+                            <td><a href="{% url 'generateinvoice' house.id %}"><button class="btn btn-outline-warning ">Create Invoice</button></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+    
+                </thead>
+    
+    
+            </table>
+        </div>
+
+    </div>
+    
+</div>
+{% endblock content %}

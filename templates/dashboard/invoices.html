@@ -1,0 +1,74 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+    
+        <div class="container">
+            <h5>Generated Invoices</h5>
+            {% for message in messages %}
+            <div class="alert alert-success" style="background-color: rgb(101, 254, 101);">
+                <h4>{{message}}</h4>
+            </div>
+            {% endfor %}
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-3">{{myFilter.form.payment_status|as_crispy_field}}</div>
+                    <div class="col-md-3">{{myFilter.form.year|as_crispy_field}}</div>
+                    <div class="col-md-3">{{myFilter.form.month|as_crispy_field}}</div>
+                    <div class="col-md-3">{{myFilter.form.apartment|as_crispy_field}}</div>
+                    <div class="col-md-2" style="margin-top: 22px;"><button class="btn btn-primary" type="submit">Search</button></div>
+    
+                </div><br>
+            </form><br>
+            <table class="table table-bordered" style="border: 1px black;">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Tenant</td>
+                        <td>Apartment</td>
+                        <td>House Number</td>
+                        <td>Month</td>
+                        <td>Year</td>
+                        <td>Rent</td>
+                        <!-- <td>ID Number</td>
+                        <td>Phone Number</td> -->
+                        <td>Rented On</td>
+                        <td>Invoice Dated</td>
+                        <td>Status</td>
+                        <td>Print</td>
+                        <td>Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice in myFilter.qs %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{invoice.tenant}}</td>
+                        <td>{{invoice.apartment}}</td>
+                        <td>{{invoice.house.house_no}}</td>
+                        <td>{{invoice.month}}</td>
+                        <td>{{invoice.year}}</td>
+                        <td>{{invoice.house.monthly_rent}}</td>
+                        <!-- <td>{{invoice.tenant.national_Id}}</td>
+                        <td>{{invoice.tenant.phoneNumber}}</td> -->
+                        <td>{{invoice.tenant.date_created}}</td>
+                        <td>{{invoice.date_created}}</td>
+                        {% if invoice.payment_status == 'paid' %}
+                        <td><button type="button" class="btn btn-success">{{invoice.payment_status}}</button></td>
+                        {% else %}
+                        <td><a href="{% url 'payinvoice' invoice.id %}"><button type="button" class="btn btn-danger">{{invoice.payment_status}}</button></a></td>
+                        {% endif %}
+                        <td><a href="{% url 'invoiceview' invoice.id %}"><button type="button" class="btn btn-success"><i class="fa fa-print fa-lg"></i></button></a></td>
+                        <td><button type="button" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i></button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            
+    
+        </div>
+{% endblock content %}

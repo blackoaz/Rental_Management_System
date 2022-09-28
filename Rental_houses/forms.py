@@ -51,12 +51,23 @@ class TenantForm(forms.ModelForm):
 class Allocate_HouseForm(forms.ModelForm) :
     class Meta:
         model= Allocate_House
-        fields = '__all__'       
+        fields = '__all__'     
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = MyCustomUser
         fields = ('username','first_name','last_name','email','phone_number','password1','password2') 
+
+
+class InvoiceForm(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = ['tenant','year','month','apartment','house']
+
+class Invoice_paymentForm(forms.ModelForm):
+    class Meta:
+        model = Invoice_payment
+        fields = ['apartment','invoice','house_rent','month','year','payment','payment_mode','payment','reference_no'] 
 
 
 class UserLoginForm(forms.ModelForm):

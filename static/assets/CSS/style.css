@@ -29,6 +29,65 @@ body{
     width: 40px;
     margin-right: 15px;
 }
+
+.items ul{
+  height: 100%;
+  padding: 30px 0 15px 0;
+  overflow: auto;
+}
+.items ul::-webkit-scrollbar{
+    display: none;
+}
+
+link{
+    display: flex;
+    align-items: center;
+}
+
+.list ul li .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+.list ul li.active .title {
+    background-color: #594ef7;
+}
+.list ul li.active .title .link{
+    display: flex;
+    align-items: center;
+
+}
+
+.list ul li .title i{
+    height: 50px;
+    min-width: 70px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+}
+
+.list ul li .title .name{
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+
+}
+
+.items ul li{
+    transition: all .5s ease;
+}
+.items ul li:hover{
+    background-color: #fff;
+}
+
+.items ul li.active .fa-chevron-down{
+    transition: all .5s ease;
+    transform: rotate(180deg);
+}
+
+
 #menu .items li{
     list-style: none;
     padding: 15px 0;
@@ -138,9 +197,17 @@ body{
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    text-align: center;
-    color: #fff;
     align-items: center;
+    color: #fff;
+    align-content: center;
+}
+.values .val-box h6{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.values .val-box h6 a{
+    text-decoration: none;
 }
 .values .val-box:nth-child(1) i{
     background: #7874ec;
@@ -169,30 +236,30 @@ body{
     text-align: right;
 }
 
-.items .sub-menu-1{
-    display: none;
+.items ul li .sub-menu-1{
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: all .5s ease;
 }
 
-.items ul li:hover .sub-menu-1{
-    display: block;
-    background: #000;
-    position: absolute;
-    margin-top: 15px;
-    margin-left: 15px;
+.items ul li.dropdown.active .sub-menu-1{
+    width: unset;
+    height: unset;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 6px 14px 80px;
 }
-.items ul li:hover .sub-menu-1 ul{
-    display: block;
-    margin: 10px;
+
+.sub-menu-1 .link{
+    font-size: 15px;
+    padding: 5px 0;
+    transition: all .5s ease;
 }
-.items ul li:hover .sub-menu-1 ul li{
-    width: 180px;
-    padding: 10px;
-    border-bottom: 1px dotted #fff;
-    background: transparent;
-    border-radius: 0;
-    text-align: left;
+
+.sub-menu-1 .link:hover{
+    color: #fff;
 }
-.items ul li:hover .sub-menu-1 ul li:last-child{
-    border-bottom: none;
-}
+
 

@@ -32,4 +32,9 @@ class TenantFilter(django_filters.FilterSet):
 class Allocate_houseFilter(django_filters.FilterSet):
     class Meta:
         model = Allocate_House
-        fields = '__all__'            
+        fields = '__all__' 
+
+class InvoiceFilter(django_filters.FilterSet):
+    class Meta:
+        model = Invoice
+        fields = ['payment_status','year','month','apartment','house']           

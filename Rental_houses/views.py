@@ -1,5 +1,8 @@
+from ast import In
+from calendar import month
 from distutils.log import error
 from multiprocessing import context
+from urllib import request
 from django.contrib import auth,messages
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import redirect, render,get_object_or_404
@@ -66,7 +69,11 @@ def logout_user(request):
 
 @login_required(login_url='login')
 def index(request):
-    context = {}
+    lanlords = Landlord.objects.all().count()
+    tenants = Tenant.objects.all().count()
+    apartments = Apartment.objects.all().count()
+    houses = Houses.objects.all().count()
+    context = {'lanlords':lanlords,'tenants':tenants,'apartments':apartments,'houses':houses}
     return render(request,'dashboard/index.html',context)
 
 @login_required(login_url='login')
@@ -235,6 +242,82 @@ def occupiedhouses(request):
 def tenant_details(request,id):
     context = {'tenant':get_object_or_404(Tenant,pk=id)}
     return render(request,'dashboard/tenantdetail.html',context)
+
+@login_required(login_url='login')
+def create_invoice(request):
+    houses = Allocate_House.objects.all()
+    myFilter = Allocate_houseFilter(request.GET,queryset=houses) 
+    context = {'houses':houses,'myFilter':myFilter}
+    return render(request,'dashboard/createinvoice.html',context)  
+
+@login_required(login_url='login')
+def generate_invoice(request,pk=0):           
+    if request.method == 'GET':
+        if id == 0:
+            form = InvoiceForm()
+        else:
+            invoice = Allocate_House.objects.get(id=pk)
+            form = InvoiceForm(instance=invoice  )
+
+        context = {'form':form}    
+        return render(request,'dashboard/generateinvoice.html',context)        
+    else:
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            tenant = form.cleaned_data.get('tenant')
+            apartment = form.cleaned_data.get('apartment')
+            month = form.cleaned_data.get('month')
+            house = form.cleaned_data.get('house')
+            messages.info(request,f'Invoice generated for {tenant}, of {apartment} house number {house} for the month of {month}')
+            return redirect('invoiceslist')
+
+@login_required(login_url='login')
+def invoices_list(request):
+    invoices = Invoice.objects.all()
+    myFilter = InvoiceFilter(request.GET,queryset=invoices)
+    context = {'invoices':invoices,'myFilter':myFilter}
+    return render(request,'dashboard/invoices.html',context,) 
+
+@login_required(login_url='login')
+def invoice_view(request,pk):
+    invoice = Invoice.objects.get(id=pk)
+    template_path = 'dashboard/invoice_view.html'
+    context = {'invoice':invoice}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response        
+
+def pay_invoice(request,pk=0):
+    if request.method == 'GET':
+        if id == 0:
+            form = Invoice_paymentForm()
+        else:
+            invoice = Invoice.objects.get(id=pk)
+            form = Invoice_paymentForm(instance=invoice  )
+
+        context = {'form':form}    
+        return render(request,'dashboard/payinvoice.html',context)        
+    else:
+        form = Invoice_paymentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            Invoice.objects.filter(id=pk).update(payment_status='paid')
+            #messages.info(request,f'Invoice generated for {tenant}, of {apartment} house number {house} for the month of {month}')
+            return redirect('invoiceslist')
+    
+
 
 # @login_required(login_url='login')
 # def allocate_house(request,id):

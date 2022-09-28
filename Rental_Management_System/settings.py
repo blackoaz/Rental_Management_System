@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'Rental_Management_System.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'Rental_Management',
+        'NAME':  'Rental_Management_system',
         'USER': 'postgres',
         'PASSWORD': 12345,
         'HOST': 'localhost',

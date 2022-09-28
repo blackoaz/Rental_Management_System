@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'assets/CSS/style.css' %}">
+    <title>Invoice</title>
+</head>
+<body>
+    <h1 style="color:red;font-size:20px" align="center">BlACKOAZ RENTAL MANAGEMENT SYSTEM</h1>
+<p style="" align="center">
+    <b>Blackoaz building 3<sup>rd</sup> Floor</b> <br>
+    <b>Tsavo Road</b> <br>
+    <b>P.o Box 1234-00100</b>
+
+</p>
+<hr>
+<h2>Date</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 border" style="margin-top: 100px;">
+            <h3 style="font-size: 16px;">Billing Details</h3>
+            <p>Total Dues: {{invoice.house.monthly_rent}}</p>
+            <p>House Number: {{invoice.house.house_no}}</p>
+            <p>Apartment Name: {{invoice.apartment}}</p>
+        </div>     
+
+        <div class="col-md-4" style="text-align: right;">
+            <p style="font-size: 16px;"><b>Invoice To:</b></p>
+            <p>Tenant Name: {{invoice.tenant}}</p>
+            <p>Tenant Number: {{invoice.tenant.phoneNumber}}</p>
+            <p>Tenant National ID: {{invoice.tenant.national_Id}}</p>
+        </div>   
+    </div><br>
+        <hr>
+        
+        <div class="col-md-8">
+            <p style="font-size: 16px;"><b>Invoice To:</b></p>
+            <p>Tenant Name: {{invoice.tenant}}</p>
+            <p>Tenant Number: {{invoice.tenant.phoneNumber}}</p>
+            <p>Tenant National ID: {{invoice.tenant.national_Id}}</p>
+        </div>
+    
+    
+    {% if invoice.payment_status == 'paid' %}
+    <button type="button" class="btn btn-success" style="border: 1px solid;">Payement Status: <span>{{invoice.payment_status}}</span></button>
+    {% else %}
+    <button type="button" class="btn btn-danger" style="border: 1px solid;">payement Status: <span>{{invoice.payment_status}}</span></button>
+    {% endif %}
+    <hr>
+
+</div>
+
+    
+</body>
+</html>
+

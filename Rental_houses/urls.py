@@ -22,4 +22,9 @@ urlpatterns = [
     path('vacanthouses/',views.vacanthouses,name='vacanthouses'),
     path('occupiedhouses/',views.occupiedhouses,name='occupiedhouses'),
     path('tenant_details/<int:id>',views.tenant_details,name='tenant_details'),
+    path('create_invoice/',views.create_invoice,name='createinvoice'),
+    path('generate_invoice/<int:pk>',views.generate_invoice,name='generateinvoice'),
+    path('invoices_list/',views.invoices_list,name='invoiceslist'),
+    path('invoice_view/<int:pk>',views.invoice_view,name='invoiceview'),
+    path('pay_invoice/<int:pk>',views.pay_invoice,name='payinvoice'),
 ]

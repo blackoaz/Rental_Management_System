@@ -1,3 +1,5 @@
+from calendar import month
+from operator import add
 import os
 from django.db import models
 from django.forms import NullBooleanField
@@ -53,7 +55,7 @@ class Houses(models.Model):
     )
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     house_no = models.IntegerField()
-    monthly_rent = models.DecimalField(max_digits=10,decimal_places=2)
+    monthly_rent = models.PositiveIntegerField(default=0)
     deposit = models.DecimalField(max_digits=10,decimal_places=2)
     house_type  = models.CharField(max_length=100,choices=HOUSE_CHOICES) 
     descption = models.CharField(max_length=250,blank=True,null=True) 
@@ -83,23 +85,16 @@ class Tenant(models.Model):
     def __str__(self):
         return self.tenant_name
 
+       
+
 
 class Allocate_House(models.Model):
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
-    house = models.ForeignKey(Houses,on_delete=models.CASCADE)
+    house = models.OneToOneField(Houses,on_delete=models.CASCADE)
+    # availability = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
-
-    # def save(self,*args, **kwargs):
-    #     available_list = []
-    #     house = Houses.objects.filter(house_no=house)
-    #     for house in house:
-    #         if house.occupancy == 'Vacant':
-    #             available_list.append(True)
-    #         else:
-    #             available_list.append(False)
-    #     return super().save(*args,**kwargs)
 
     def __str__(self):
         return f'{self.tenant} has rented house number {self.house} from {self.apartment}'
@@ -128,27 +123,63 @@ class Invoice(models.Model):
     year = models.IntegerField()
     month = models.CharField(max_length=20,choices=MONTH_CHOICES)
     rent = models.PositiveIntegerField(default = 0)
-    payment_status = models.CharField(max_length=50,choices=PAYMENT_STATUS, default='unpaid')
+    payment_status = models.CharField(max_length=50,choices=PAYMENT_STATUS, default='unpaid') 
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
 
     def save(self,*args, **kwargs):
-        self.rent = self.house.monthly_rent
-        account_sid = os.getenv('account_sid')
-        auth_token = os.getenv('auth_token')
-        client = Client(account_sid, auth_token)
+        self.rent = self.house.monthly_rent  
+        # account_sid = os.getenv('account_sid')
+        # auth_token = os.getenv('auth_token')
+        # client = Client(account_sid, auth_token)
 
-        message = client.messages.create(
-                            body=f"Hello, {self.tenant.tenant_name} your rent for the month of {self.month} is {self.rent}, \
-                                Regards Blackoaz Rental Agency",
-                            from_='+15736523274',
-                            to=f'{self.tenant.phoneNumber}'
-                        )
+        # message = client.messages.create(
+        #                     body=f"Hello, {self.tenant.tenant_name} your rent for the month of {self.month} is {self.rent}, \
+        #                         Regards Blackoaz Rental Agency",
+        #                     from_='+15736523274',
+        #                     to=f'{self.tenant.phoneNumber}'
+        #                 )
 
-        print(message.sid)
+        # print(message.sid)
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.house)     
+        return str(self.house) 
 
+class Invoice_payment(models.Model):
+    PAYMENT_MODE=(
+        ('Mpesa','Mpesa'),
+        ('Cash','Cash'),
+        ('Bank','Bank'),
+    )
+    apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
+    # house= models.ForeignKey(Houses,on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE)
+    house_rent = models.PositiveIntegerField(default=0)
+    month = models.CharField(max_length=20)
+    year = models.IntegerField()
+    payment = models.PositiveIntegerField(default=0)
+    over_payment = models.PositiveIntegerField(default=0)
+    balance = models.PositiveIntegerField(default=0)
+    payment_mode = models.CharField(max_length=50,choices=PAYMENT_MODE,default='Cash')
+    reference_no = models.CharField(max_length=50, null=True,blank=True)
+    management_earning = models.DecimalField(max_digits=10,decimal_places=2,default = 0)
+
+    def __str__(self):
+        return str(self.invoice)
+    def save(self,*args,**kwargs):
+        self.house_rent = self.invoice.rent
+        self.month = self.invoice.month
+        self.year = self.invoice.year
+
+        if self.payment > self.invoice.rent:
+            self.over_payment = self.payment - self.invoice.rent
+        else:
+            if self.payment < self.invoice.rent:
+                self.balance = self.invoice.rent - self.payment 
+        self.payment = self.payment-self.over_payment
+        self.management_earning = (self.payment * self.apartment.management_fee)/100        
+        return super().save(*args,**kwargs)    
+
+   
