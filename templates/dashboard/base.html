@@ -83,7 +83,7 @@
             <li class="dropdown">
                 <div class="title">
                     <a href="#" class="link">
-                        <i class="fa fa-notebook fa-lg"></i>
+                        <img src="{% static 'assets/images/house-chimney-solid.svg' %}" alt="">
                         <span class="name">Invoice</span>
                     </a>
                     <i class="fa fa-chevron-down"></i>
@@ -91,6 +91,14 @@
                 <div class="sub-menu-1"> 
                         <a href="{% url 'createinvoice'%}">Create Invoice</a>
                         <a href="{% url 'invoiceslist' %}">Listed Invoices</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <div class="title">
+                    <a href="{% url 'totalrent' %}" class="link">
+                        <img src="{% static 'assets/images/house-chimney-solid.svg' %}" alt="">
+                        <span class="name">Management Sales</span>
+                    </a>
                 </div>
             </li>
             <li><span><img src="{% static 'assets/images/gear-solid.svg' %}" alt=""><a href="{% url 'logout_user' %}">Sign Out</a></span></li>
@@ -103,8 +111,7 @@
         <div class="navigation">
             <div class="n1">
                 <div class="search">
-                   <i class="fa fa-search"></i> 
-                   <input type="text" placeholder="Search">
+                    <i class="fa fa-bars"></i>
                 </div>
 
             </div>

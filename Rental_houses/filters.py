@@ -37,4 +37,9 @@ class Allocate_houseFilter(django_filters.FilterSet):
 class InvoiceFilter(django_filters.FilterSet):
     class Meta:
         model = Invoice
-        fields = ['payment_status','year','month','apartment','house']           
+        fields = ['payment_status','year','month','apartment','house'] 
+
+class Invoice_paymentFilter(django_filters.FilterSet):
+    class Meta:
+        model = Invoice_payment
+        fields = '__all__'          

@@ -11,7 +11,10 @@ class InvoiceAdmin(admin.ModelAdmin):
     #list_filter: _ListOrTuple[_ListFilterT]
 
 class Invoice_paymentAdmin(admin.ModelAdmin):
-    list_display =['invoice','house_rent','month','year','payment','payment_mode','payment','over_payment','balance','reference_no','management_earning']    
+    list_display =['apartment','invoice','house_rent','month','year','payment','payment_mode','over_payment','balance','reference_no','management_earning']    
+
+# class Total_earningAdmin(admin.ModelAdmin):
+#     list_display =['apartment','year','month','total_earning']    
   
 
 admin.site.register(Landlord)
@@ -22,5 +25,6 @@ admin.site.register(Allocate_House)
 admin.site.register(Invoice,InvoiceAdmin)
 # admin.site.register(Management_sales)
 admin.site.register(Invoice_payment,Invoice_paymentAdmin)
+# admin.site.register(Total_earning,Total_earningAdmin)
 
 # Register your models here.

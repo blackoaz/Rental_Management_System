@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+    {% block content %}
+    <div class="container">
+        <h5>Filter For Incomes on Monthly,yearly and Apartment</h5>
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">{{ myFilter.form.apartment|as_crispy_field}}</div>
+                    <div class="col-md-4">{{ myFilter.form.year|as_crispy_field}}</div>
+                    <div class="col-md-4">{{ myFilter.form.month|as_crispy_field}}</div>
+                </div><br>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+<table class="table">
+        <tr>
+            <th>Apartment</th>
+            <th>Invoice</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Paid Rent</th>
+            <th>Management Earning</th>
+            <th>Action</th>
+        </tr>
+    <tbody>
+        {% for paid_invoice in myFilter.qs %}
+        <tr>
+            <td>{{paid_invoice.apartment}}</td>
+            <td>{{paid_invoice.invoice}}</td>
+            <td>{{paid_invoice.year}}</td>
+            <td>{{paid_invoice.month}}</td>
+            <td>{{paid_invoice.payment}}</td>
+            <td>{{paid_invoice.management_earning}}</td>
+            <td><a href="#" class="btn text-secondary px-0">
+                <i class="fa fa-edit fa-lg"></i>
+            </a></td>
+            <td><a href="#" class="btn text-danger px-0">
+                <i class="fa fa-trash fa-lg"></i>
+            </a></td>
+        </tr>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>Total</td>
+            <td id="rentotal"></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<script src="{% static './jquery-3.6.1.min.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        var paidRent;
+        var companyearning;
+        var totalRent = 0;
+        $('td:nth-child(5)').each(function(){
+            paidRent = $(this.html());
+            totalRent+=parseInt(paidRent);
+            $('#rentotal').text(totalRent)
+
+        })
+
+        console.log('Hello world')
+    })
+</script> 
+{% endblock content %}
+
+    </div>
+    
+

@@ -20,7 +20,7 @@ class LandlordForm(forms.ModelForm):
 class ApartmentForm(forms.ModelForm):
     class Meta:
         model = Apartment
-        fields = ('apartment_name','apartment_owner','apartment_type','apartment_description','image','town_located','apartment_location','management_fee')
+        fields = ('apartment_name','apartment_owner','apartment_type','apartment_description','town_located','apartment_location','management_fee')
     
     def __init__(self,*args,**kwargs):
         super(ApartmentForm,self).__init__(*args,**kwargs)
@@ -67,7 +67,7 @@ class InvoiceForm(forms.ModelForm):
 class Invoice_paymentForm(forms.ModelForm):
     class Meta:
         model = Invoice_payment
-        fields = ['apartment','invoice','house_rent','month','year','payment','payment_mode','payment','reference_no'] 
+        fields = ['apartment','invoice','month','year','payment','payment_mode','payment','reference_no'] 
 
 
 class UserLoginForm(forms.ModelForm):

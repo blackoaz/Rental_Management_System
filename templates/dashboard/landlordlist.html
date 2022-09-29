@@ -37,7 +37,12 @@
                 <td>{{landlord.phone_number}}</td>
                 <td>{{landlord.email_address}}</td>
                 <td>{{landlord.date_created}}</td>
-                <td><button class="btn btn-warning">Details</button></td>
+                <td><a href="{% url 'updatelandlord' landlord.id %}" class="btn text-secondary px-0">
+                    <i class="fa fa-edit fa-lg"></i>
+                </a></td>
+                <td><a href="{% url 'deletelandlord' landlord.id %}" class="btn text-danger px-0">
+                    <i class="fa fa-trash fa-lg"></i>
+                </a></td>
             </tr>
             {% endfor %}
         </tbody>

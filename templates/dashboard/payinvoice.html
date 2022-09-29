@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container">
-    <form action="{url 'payinvoice' invoice.id }" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         <div>{{form|crispy}}</div><br>
         <button type="submit" class="btn btn-primary">PAY</button>

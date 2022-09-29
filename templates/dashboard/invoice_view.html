@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'assets/CSS/style.css' %}">
     <title>Invoice</title>
 </head>
-<body>
+<body onload="startDate()">
     <h1 style="color:red;font-size:20px" align="center">BlACKOAZ RENTAL MANAGEMENT SYSTEM</h1>
 <p style="" align="center">
     <b>Blackoaz building 3<sup>rd</sup> Floor</b> <br>
@@ -19,31 +19,33 @@
 
 </p>
 <hr>
-<h2>Date</h2>
+<h2>Date: {{invoice.tenant.date_created}}</h2>
 <div class="container">
-    <div class="row">
-        <div class="col-md-4 border" style="margin-top: 100px;">
-            <h3 style="font-size: 16px;">Billing Details</h3>
-            <p>Total Dues: {{invoice.house.monthly_rent}}</p>
-            <p>House Number: {{invoice.house.house_no}}</p>
-            <p>Apartment Name: {{invoice.apartment}}</p>
-        </div>     
-
-        <div class="col-md-4" style="text-align: right;">
-            <p style="font-size: 16px;"><b>Invoice To:</b></p>
-            <p>Tenant Name: {{invoice.tenant}}</p>
-            <p>Tenant Number: {{invoice.tenant.phoneNumber}}</p>
-            <p>Tenant National ID: {{invoice.tenant.national_Id}}</p>
-        </div>   
-    </div><br>
+    <table>
+        <thead>
+            <tr>
+                <td colspan="4"><b>Billing Details</b></td>
+                <td><b>Invoice To</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4">Total Dues: {{invoice.house.monthly_rent}}</td>
+                <td>Tenant Name: {{invoice.tenant}}</td>
+            </tr>
+            <tr>
+                <td colspan="4">House Number: {{invoice.house.house_no}}</td>
+                <td>Tenant Number: {{invoice.tenant.phoneNumber}}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Apartment Name: {{invoice.apartment}}</td>
+                <td>Tenant National ID: {{invoice.tenant.national_Id}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2 style="text-align: center;">Payment Specifics</h2>
         <hr>
         
-        <div class="col-md-8">
-            <p style="font-size: 16px;"><b>Invoice To:</b></p>
-            <p>Tenant Name: {{invoice.tenant}}</p>
-            <p>Tenant Number: {{invoice.tenant.phoneNumber}}</p>
-            <p>Tenant National ID: {{invoice.tenant.national_Id}}</p>
-        </div>
     
     
     {% if invoice.payment_status == 'paid' %}
@@ -55,7 +57,16 @@
 
 </div>
 
-    
+<script>
+    function startDate(){
+        var d = new Date();
+        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+        var months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+        document.getElementById('date').innerHTML = days[d.getDay()]+" | "+d.getDate()+"  "+months[d.getMonth()]+" "+getFullYear();
+    }
+    startDate();
+
+</script>    
 </body>
 </html>
 

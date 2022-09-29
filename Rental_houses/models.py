@@ -1,5 +1,6 @@
 from calendar import month
 from operator import add
+from django.db.models import Sum
 import os
 from django.db import models
 from django.forms import NullBooleanField
@@ -17,6 +18,8 @@ class Landlord(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('-f_name',)
     def __str__(self):
         return self.f_name + " " + self.l_name
 
@@ -127,6 +130,9 @@ class Invoice(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('-date_created',)
+
 
     def save(self,*args, **kwargs):
         self.rent = self.house.monthly_rent  
@@ -166,6 +172,9 @@ class Invoice_payment(models.Model):
     reference_no = models.CharField(max_length=50, null=True,blank=True)
     management_earning = models.DecimalField(max_digits=10,decimal_places=2,default = 0)
 
+    class Meta:
+        ordering = ('-invoice',)
+
     def __str__(self):
         return str(self.invoice)
     def save(self,*args,**kwargs):
@@ -180,6 +189,26 @@ class Invoice_payment(models.Model):
                 self.balance = self.invoice.rent - self.payment 
         self.payment = self.payment-self.over_payment
         self.management_earning = (self.payment * self.apartment.management_fee)/100        
-        return super().save(*args,**kwargs)    
+        return super().save(*args,**kwargs)  
+
+
+# class Total_earning(models.Model):
+#     apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
+#     paid_invoice = models.ForeignKey(Invoice_payment,on_delete=models.CASCADE)
+#     paid_rent = models.PositiveIntegerField(default=0) 
+#     year = models.IntegerField()
+#     month = models.CharField(max_length=20)         
+#     management_total_earning = models.PositiveIntegerField(default=0)  
+
+#     def __str__(self):
+#         return str(self.total_earning)
+
+#     def save(self,*args,**kwargs):
+#         self.year = self.paid_invoice.year
+#         self.month = self.paid_invoice.month
+#         self.total_earning = self.paid_invoice.payment
+#         self.management_total_earning = Sum(self.total_earning)
+
+#         return super().save(*args,**kwargs)        
 
    

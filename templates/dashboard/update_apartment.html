@@ -4,14 +4,14 @@
 
 
 {% block content %}
-<h1>Update apartment Details</h1>
+<div class="container">
+    <h1>Update apartment Details</h1>
 <form action=" " method="post">
     {% csrf_token %}
     <div class="row">
         <div class="col-md-6">{{form.apartment_name|as_crispy_field}}</div>
         <div class="col-md-6">{{form.apartment_owner|as_crispy_field}}</div>
         <div class="col-md-6">{{form.apartment_type|as_crispy_field}}</div>
-        <div class="col-md-6">{{form.image|as_crispy_field}}</div>
         <div class="col-md-6">{{form.town_located|as_crispy_field}}</div>
         <div class="col-md-6">{{form.apartment_location|as_crispy_field}}</div>
     </div>
@@ -22,4 +22,7 @@
     
     <button type="submit" class="btn btn-success">Update</button>
 </form>
+
+</div>
+
 {% endblock content %}

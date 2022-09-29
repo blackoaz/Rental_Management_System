@@ -14,6 +14,8 @@ urlpatterns = [
     path('add_houses/',views.add_houses,name='addhouses'),
     path('update_house/<int:pk>',views.update_house,name='updatehouse'),
     path('update_apartment/<int:pk>',views.update_apartment,name='updateapartment'),
+    path('update_landlord/<int:pk>',views.update_landlord,name='updatelandlord'),
+    path('delete_landlord/<int:pk>',views.delete_landlord,name='deletelandlord'),
     path('delete_house/<int:pk>',views.delete_house,name='deletehouse'),
     path('assignhouses/<int:id>',views.assignhouses,name='assignhouses'),
     #path('allocate_house/<int:id>',views.allocate_house,name='allocate_house'),
@@ -27,4 +29,6 @@ urlpatterns = [
     path('invoices_list/',views.invoices_list,name='invoiceslist'),
     path('invoice_view/<int:pk>',views.invoice_view,name='invoiceview'),
     path('pay_invoice/<int:pk>',views.pay_invoice,name='payinvoice'),
+    path('total_rent/',views.total_rent,name='totalrent'),
+    path('delete_invoice/<int:pk>',views.delete_invoice,name='deleteinvoice'),
 ]

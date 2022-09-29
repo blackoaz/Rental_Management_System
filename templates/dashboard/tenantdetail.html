@@ -4,10 +4,11 @@
 
 {% block content %}
 <div class="container">
-    <div><h1>Tenant:{{tenant.tenant_name}}</h1></div>
-    <p>This member was registered on {{tenant.date_created}}</p>
+    <div class="container">
+        <h3>Tenant:{{tenant.tenant_name}}</h3>
+     <p>This member was registered on {{tenant.date_created}}</p>
         <div class="row">
-            <div class="col-md-8 border" style="background-color: rgb(253, 253, 121);">
+            <div class="col-md-6 border" style="background-color: rgb(253, 253, 121);">
                 <h4>Tenant Information</h4>
                 <ul>
                     <li><b>Id Number: </b>{{tenant.national_Id}}</li>
@@ -24,13 +25,20 @@
                 </ul>     
                 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="container border">
                     <h4>Tenant Invoices</h4>
+                    <ul>
+                        <li><b>Invoice Number: </b>{{invoice}}</li>
+                        <!-- <li><b>Year: </b>{{invoice.year}}</li>
+                        <li><b>Rent: </b>{{invoice.rent}}</li>
+                        <li><b>Payment Status: </b>{{invoice.payment_status}}</li> -->
+                    </ul>
                 </div>
                 
 
             </div>
         </div>
+    </div>    
 </div>
 {% endblock content %}

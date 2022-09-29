@@ -136,21 +136,9 @@ link{
     position: relative;
     width: calc(100%-300px);
 }
-#interface .navigation .search{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 10px 14px;
-    border: 1px solid #d7dbe6;
-    border-radius: 4px;
-}
 #interface .navigation .search i{
     margin-right: 14px;
-}
-#interface .navigation .search input{
-    border: none;
-    outline: none;
-    font-size: 14px;
+    cursor: pointer;
 }
 #interface .navigation .profile{
     display: flex;

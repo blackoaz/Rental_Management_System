@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
 from .forms import *
 from .filters import *
@@ -170,7 +171,16 @@ def delete_house(request,pk=0):
         house.delete()
         return redirect('addhouses')
     context = {'house':house}
-    return render(request, 'dashboard/deletehouse.html',context)    
+    return render(request, 'dashboard/deletehouse.html',context)  
+
+@login_required(login_url='login')    
+def delete_landlord(request,pk=0):
+    landlord = Landlord.objects.get(id=pk)
+    if request.method == 'POST':
+        landlord.delete()
+        return redirect('landlords')
+    context = {'landlord':landlord}
+    return render(request, 'dashboard/deletelandlord.html',context)    
 
 @login_required(login_url='login')
 def update_apartment(request,pk=0):
@@ -184,7 +194,21 @@ def update_apartment(request,pk=0):
             form.save()
             return redirect('apartmentlist')
     context = {'form':form}   
-    return render(request,'dashboard/update_apartment.html',context)        
+    return render(request,'dashboard/update_apartment.html',context) 
+
+@login_required(login_url='login')
+def update_landlord(request,pk=0):
+    form = LandlordForm()       
+    landlord = Landlord.objects.get(id=pk)
+    form = LandlordForm(instance=landlord)
+    if request.method == 'POST':
+        #print("printing Post",request.POST)
+        form = LandlordForm(request.POST,instance=landlord)
+        if form.is_valid():
+            form.save()
+            return redirect('landlords')
+    context = {'form':form}   
+    return render(request,'dashboard/updatelandlord.html',context)        
     
 
 
@@ -240,7 +264,8 @@ def occupiedhouses(request):
 
 @login_required(login_url='login')
 def tenant_details(request,id):
-    context = {'tenant':get_object_or_404(Tenant,pk=id)}
+    invoice = Invoice.objects.get(pk=id)
+    context = {'tenant':get_object_or_404(Tenant,pk=id),'invoice':invoice}
     return render(request,'dashboard/tenantdetail.html',context)
 
 @login_required(login_url='login')
@@ -272,8 +297,19 @@ def generate_invoice(request,pk=0):
             messages.info(request,f'Invoice generated for {tenant}, of {apartment} house number {house} for the month of {month}')
             return redirect('invoiceslist')
 
+@login_required(login_url='login')    
+def delete_invoice(request,pk=0):
+    invoice = Invoice.objects.get(id=pk)
+    if request.method == 'POST':
+        invoice.delete()
+        return redirect('invoiceslist')
+    context = {'invoice':invoice}
+    return render(request, 'dashboard/deleteinvoice.html',context) 
+
+
 @login_required(login_url='login')
 def invoices_list(request):
+
     invoices = Invoice.objects.all()
     myFilter = InvoiceFilter(request.GET,queryset=invoices)
     context = {'invoices':invoices,'myFilter':myFilter}
@@ -297,8 +333,9 @@ def invoice_view(request,pk):
     # if error then show some funny view
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response        
+    return response
 
+@login_required(login_url='login')
 def pay_invoice(request,pk=0):
     if request.method == 'GET':
         if id == 0:
@@ -306,7 +343,7 @@ def pay_invoice(request,pk=0):
         else:
             invoice = Invoice.objects.get(id=pk)
             form = Invoice_paymentForm(instance=invoice  )
-
+            
         context = {'form':form}    
         return render(request,'dashboard/payinvoice.html',context)        
     else:
@@ -316,25 +353,15 @@ def pay_invoice(request,pk=0):
             Invoice.objects.filter(id=pk).update(payment_status='paid')
             #messages.info(request,f'Invoice generated for {tenant}, of {apartment} house number {house} for the month of {month}')
             return redirect('invoiceslist')
+
+def total_rent(request):
+    paid_invoices = Invoice_payment.objects.all()
+    myFilter = Invoice_paymentFilter(request.GET,queryset=paid_invoices)
+
+    context = {'paid_invoices':paid_invoices,'myFilter':myFilter}
+    return render(request,'dashboard/incomes.html',context)            
     
 
-
-# @login_required(login_url='login')
-# def allocate_house(request,id):
-#     form = Allocate_HouseForm()
-#     allocate_house = Allocate_House.objects.all()
-#     available_list = []
-#     houses = Houses.objects.filter(house_no=house)
-#     Houses.objects.filter(pk=id).update(occupancy='Occupied') 
-#     for house in houses:
-#         if house.occupancy == 'Vacant':
-#             available_list.append(True)
-#         else:
-#             available_list.append(False)
-
-#             return all(available_list)
-
-#         return redirect('occupiedhouses')
 
 # def render_pdf_view(request):
 #     template_path = 'user_printer.html'
