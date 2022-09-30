@@ -264,8 +264,7 @@ def occupiedhouses(request):
 
 @login_required(login_url='login')
 def tenant_details(request,id):
-    invoice = Invoice.objects.get(pk=id)
-    context = {'tenant':get_object_or_404(Tenant,pk=id),'invoice':invoice}
+    context = {'tenant':get_object_or_404(Tenant,pk=id)}
     return render(request,'dashboard/tenantdetail.html',context)
 
 @login_required(login_url='login')
@@ -354,18 +353,21 @@ def pay_invoice(request,pk=0):
             #messages.info(request,f'Invoice generated for {tenant}, of {apartment} house number {house} for the month of {month}')
             return redirect('invoiceslist')
 
+@login_required(login_url='login')
 def total_rent(request):
     paid_invoices = Invoice_payment.objects.all()
     myFilter = Invoice_paymentFilter(request.GET,queryset=paid_invoices)
 
     context = {'paid_invoices':paid_invoices,'myFilter':myFilter}
-    return render(request,'dashboard/incomes.html',context)            
-    
+    return render(request,'dashboard/incomes.html',context) 
+
+@login_required(login_url='login')    
 def vacate_tenant(request,pk=0):
     tenant = Allocate_House.objects.get(id=pk)
     if request.method == 'POST':
         Houses.objects.filter(id=pk).update(occupancy='Vacant')
-        return redirect('vacanthouses')
+        tenant.delete()
+        return redirect('houses')
     context = {'tenant':tenant}
     return render(request, 'dashboard/vacatetenant.html',context) 
 

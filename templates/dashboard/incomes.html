@@ -22,7 +22,6 @@
             <th>Month</th>
             <th>Paid Rent</th>
             <th>Management Earning</th>
-            <th>Action</th>
         </tr>
     <tbody>
         {% for paid_invoice in myFilter.qs %}
@@ -33,19 +32,13 @@
             <td>{{paid_invoice.month}}</td>
             <td>{{paid_invoice.payment}}</td>
             <td>{{paid_invoice.management_earning}}</td>
-            <td><a href="#" class="btn text-secondary px-0">
-                <i class="fa fa-edit fa-lg"></i>
-            </a></td>
-            <td><a href="#" class="btn text-danger px-0">
-                <i class="fa fa-trash fa-lg"></i>
-            </a></td>
         </tr>
         </tr>
         {% endfor %}
         <tr>
-            <td>Total</td>
+            <td colspan="4">Total</td>
             <td id="rentotal"></td>
-            <td></td>
+            <td id="feetotal"></td>
         </tr>
     </tbody>
 </table>
@@ -57,10 +50,17 @@
         var paidRent;
         var companyearning;
         var totalRent = 0;
+        var totalFee = 0;
         $('td:nth-child(5)').each(function(){
-            paidRent = $(this.html());
+            paidRent = $(this).html();
             totalRent+=parseInt(paidRent);
             $('#rentotal').text(totalRent)
+
+        })
+        $('td:nth-child(6)').each(function(){
+            companyearning = $(this).html();
+            totalFee+=parseInt(companyearning);
+            $('#feetotal').text(totalFee)
 
         })
 

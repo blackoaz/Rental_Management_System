@@ -46,7 +46,12 @@
                     <td>{{tenant.Occupation}}</td>
                     <td>{{tenant.emergency_person_name}}</td>
                     <td>{{tenant.emergency_person_contact}}</td>
-                    <td><a href="{% url 'tenant_details' tenant.id %}"><button class="btn btn-warning">Details</button></a></td>
+                    <td><a href="#" class="btn text-secondary px-0">
+                        <i class="fa fa-edit fa-lg"></i>
+                    </a></td>
+                    <td><a href="#" class="btn text-danger px-0">
+                        <i class="fa fa-trash fa-lg"></i>
+                    </a></td>
                 </tr>
                 {% endfor %}
             </tbody>

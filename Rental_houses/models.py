@@ -58,7 +58,7 @@ class Houses(models.Model):
     )
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     house_no = models.IntegerField()
-    monthly_rent = models.PositiveIntegerField(default=0)
+    monthly_rent = models.PositiveIntegerField()
     deposit = models.DecimalField(max_digits=10,decimal_places=2)
     house_type  = models.CharField(max_length=100,choices=HOUSE_CHOICES) 
     descption = models.CharField(max_length=250,blank=True,null=True) 
@@ -92,9 +92,9 @@ class Tenant(models.Model):
 
 
 class Allocate_House(models.Model):
-    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
+    tenant = models.ForeignKey(Tenant, on_delete=models.SET_NULL,null=True)
     apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
-    house = models.OneToOneField(Houses,on_delete=models.SET_NULL,null=True)
+    house = models.OneToOneField(Houses,on_delete=models.CASCADE)
     # availability = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)

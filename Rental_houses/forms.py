@@ -67,7 +67,13 @@ class InvoiceForm(forms.ModelForm):
 class Invoice_paymentForm(forms.ModelForm):
     class Meta:
         model = Invoice_payment
-        fields = ['apartment','invoice','month','year','payment','payment_mode','payment','reference_no'] 
+        fields = ['apartment','month','year','invoice','payment','payment_mode','reference_no'] 
+        labels = {
+            'apartment':'Name of Apartment',
+            'invoice':'Choose Invoice Number',
+            'payment':'Enter Payment Amount Made',
+            'reference_no':'Enter Payment Reference Number',
+        }
 
 
 class UserLoginForm(forms.ModelForm):

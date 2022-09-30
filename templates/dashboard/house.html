@@ -42,6 +42,7 @@
                             <td><a href="{% url 'deletehouse' house.id %}" class="btn text-danger px-0">
                                 <i class="fa fa-trash fa-lg"></i>
                             </a></td>
+                            <td><td><a href="{% url 'assignhouses' house.id %}"><button class="btn btn-success">Place Tenant</button></a></td></td>
                         </tr>
                         {% endfor %}
                     </tbody>
