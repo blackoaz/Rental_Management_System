@@ -31,4 +31,5 @@ urlpatterns = [
     path('pay_invoice/<int:pk>',views.pay_invoice,name='payinvoice'),
     path('total_rent/',views.total_rent,name='totalrent'),
     path('delete_invoice/<int:pk>',views.delete_invoice,name='deleteinvoice'),
+    path('vacate_tenant/<int:pk>',views.vacate_tenant,name='vacatetenant'),
 ]

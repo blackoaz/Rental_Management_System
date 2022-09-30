@@ -32,7 +32,7 @@
                             <td>{{house.tenant.tenant_name}}</td>
                             <td>{{house.house.monthly_rent}}</td>
                             <td>{{house.house.house_type}}</td>
-                            <td><button class="btn btn-warning">Vacate Tenant</button></td>
+                            <td><a href="{% url 'vacatetenant' house.id %}"><button class="btn btn-warning">Vacate Tenant</button></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

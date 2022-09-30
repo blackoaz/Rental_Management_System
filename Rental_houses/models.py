@@ -94,7 +94,7 @@ class Tenant(models.Model):
 class Allocate_House(models.Model):
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
-    house = models.OneToOneField(Houses,on_delete=models.CASCADE)
+    house = models.OneToOneField(Houses,on_delete=models.SET_NULL,null=True)
     # availability = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
@@ -190,6 +190,7 @@ class Invoice_payment(models.Model):
         self.payment = self.payment-self.over_payment
         self.management_earning = (self.payment * self.apartment.management_fee)/100        
         return super().save(*args,**kwargs)  
+
 
 
 # class Total_earning(models.Model):

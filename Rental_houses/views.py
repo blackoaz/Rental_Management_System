@@ -361,7 +361,13 @@ def total_rent(request):
     context = {'paid_invoices':paid_invoices,'myFilter':myFilter}
     return render(request,'dashboard/incomes.html',context)            
     
-
+def vacate_tenant(request,pk=0):
+    tenant = Allocate_House.objects.get(id=pk)
+    if request.method == 'POST':
+        Houses.objects.filter(id=pk).update(occupancy='Vacant')
+        return redirect('vacanthouses')
+    context = {'tenant':tenant}
+    return render(request, 'dashboard/vacatetenant.html',context) 
 
 # def render_pdf_view(request):
 #     template_path = 'user_printer.html'

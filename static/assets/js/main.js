@@ -37,4 +37,18 @@ listItems.forEach(item =>{
     });
     
 });
-console.log(isActive)
+
+//summation of paid rent and Management Earning
+$(document).ready(function(){
+    var paidRent;
+    var companyearning;
+    var totalRent = 0;
+    $('td:nth-child(5)').each(function(){
+        paidRent = $(this.html());
+        totalRent+=parseInt(paidRent);
+        $('#rentotal').text(totalRent)
+
+    })
+
+    console.log('Hello world')
+})
