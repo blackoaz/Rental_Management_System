@@ -17,7 +17,8 @@
                 {{form.monthly_rent|as_crispy_field}}
                 {{form.deposit|as_crispy_field}}
                 {{form.house_type|as_crispy_field}}
-                {{form.descption|as_crispy_field}}<br>
+                {{form.descption|as_crispy_field}}
+                {{form.occupancy|as_crispy_field}}<br>
                 
                 <button type="submit" class="btn btn-primary">Submit</button><br>
     
@@ -57,7 +58,7 @@
                             <td>{{house.deposit}}</td>
                             <td>{{house.house_type}}</td>
                             <!-- <td>{{house.descption}}</td> -->
-                            <td>Date created</td>
+                            <td>{{house.date_created}}</td>
                             <td><a href="{% url 'updatehouse' house.id %}" class="btn text-secondary px-0">
                                 <i class="fa fa-edit fa-lg"></i>
                             </a></td>

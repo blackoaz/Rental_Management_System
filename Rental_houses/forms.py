@@ -30,7 +30,7 @@ class ApartmentForm(forms.ModelForm):
 class HousesForm(forms.ModelForm):
     class Meta:
         model = Houses
-        fields = ['apartment','house_no','monthly_rent','deposit','house_type','descption']
+        fields = ['apartment','house_no','monthly_rent','deposit','house_type','descption','occupancy']
         labels = {
             'apartment':'Name of Apartment',
             'house_no':'House Number',

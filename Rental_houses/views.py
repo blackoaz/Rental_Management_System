@@ -146,23 +146,21 @@ def add_houses(request):
             return redirect('addhouses')        
     context = {'form':form,'houses':houses,'myFilter':myFilter}
     return render(request,'dashboard/addhouses.html',context)
-
+#################################################################/////
 @login_required(login_url='login')
 def update_house(request,pk=0):
-    if request.method == 'GET':
-        if id == 0:
-            form = HousesForm()
-        else:
-            house = Houses.objects.get(id=pk)
-            form = HousesForm(instance=house)
-
-        context = {'form':form}    
-        return render(request,'dashboard/update_house.html',context)        
-    else:
-        form = HousesForm(request.POST)
+    form = HousesForm()
+    house = Houses.objects.get(id=pk)
+    form = HousesForm(instance=house)
+    if request.method == 'POST':
+        #print("printing Post",request.POST)
+        form = HousesForm(request.POST,instance=house)
         if form.is_valid():
             form.save()
-            return redirect('addhouses')    
+            return redirect('addhouses')
+    context = {'form':form}   
+    return render(request,'dashboard/update_house.html',context) 
+   
 
 @login_required(login_url='login')    
 def delete_house(request,pk=0):
