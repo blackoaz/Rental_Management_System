@@ -15,7 +15,7 @@ class Landlord(models.Model):
     Id_number = models.IntegerField()
     email_address = models.EmailField(unique=True, blank=True,null=True)
     phone_number = PhoneNumberField()
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -38,7 +38,7 @@ class Apartment(models.Model):
     town_located = models.CharField(max_length=50)
     apartment_location = models.CharField(max_length=50)
     management_fee = models.DecimalField(max_digits=5,decimal_places=2)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -63,7 +63,7 @@ class Houses(models.Model):
     house_type  = models.CharField(max_length=100,choices=HOUSE_CHOICES) 
     descption = models.CharField(max_length=250,blank=True,null=True) 
     occupancy = models.CharField(max_length=50,choices=OCCUPANCY_CHOICES,default='Vacant')
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True) 
 
     class Meta:
@@ -82,7 +82,7 @@ class Tenant(models.Model):
     Occupation = models.CharField(max_length=150)
     emergency_person_name = models.CharField(max_length=250)
     emergency_person_contact = PhoneNumberField()
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -96,7 +96,7 @@ class Allocate_House(models.Model):
     apartment = models.ForeignKey(Apartment,on_delete=models.CASCADE)
     house = models.OneToOneField(Houses,on_delete=models.CASCADE)
     # availability = models.BooleanField(default=True)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -127,7 +127,7 @@ class Invoice(models.Model):
     month = models.CharField(max_length=20,choices=MONTH_CHOICES)
     rent = models.PositiveIntegerField(default = 0)
     payment_status = models.CharField(max_length=50,choices=PAYMENT_STATUS, default='unpaid') 
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)
 
     class Meta:

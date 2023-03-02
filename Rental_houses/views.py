@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.core.paginator import Paginator
 
 from .forms import *
 from .filters import *
@@ -107,8 +108,11 @@ def apartment(request):
 @login_required(login_url='login')
 def house(request):
     houses = Houses.objects.all()
+    p= Paginator(houses, 2)
+    page= request.GET.get('page')
+    page_No = p.get_page(page)
     myFilter = HousesFilter(request.GET,queryset=houses)
-    context = {'houses':houses,'myFilter':myFilter}
+    context = {'houses':houses,'myFilter':myFilter,'page_No':page_No}
     return render(request,'dashboard/house.html',context)
 
 @login_required(login_url='login')

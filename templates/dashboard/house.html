@@ -51,6 +51,18 @@
     
     
             </table>
+            <!-- {{ page_No }} -->
+            {% if page_No.has_previous %}
+            <a href="?page=1">First &laquo;</a>
+            <a href="?page={{ page_No.previous_page_number }}">Previuos</a>
+
+            {% endif %}
+            Page{{ page_No.number }} of {{ page_No.paginator.num_pages }}
+
+            {% if page_No.has_next %}
+            <a href="?page={{ page_No.next_page_number }}">next</a>
+            <a href="?page={{ page_No.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
         </div>
 
     </div>

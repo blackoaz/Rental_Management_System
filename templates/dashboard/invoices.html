@@ -61,7 +61,7 @@
                         {% else %}
                         <td><a href="{% url 'payinvoice' invoice.id %}"><button type="button" class="btn btn-danger">{{invoice.payment_status}}</button></a></td>
                         {% endif %}
-                        <td><a href="{% url 'invoiceview' invoice.id %}"><button type="button" class="btn btn-success"><i class="fa fa-print fa-lg"></i></button></a></td>
+                        <td><a href="{% url 'invoiceview' invoice.id %}"><button type="button" class="btn btn-secondary"><i class="fa fa-print fa-lg"></i></button></a></td>
                         <td><a href="{% url 'deleteinvoice' invoice.id %}"><button type="button" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i></button></a></td>
                     </tr>
                     {% endfor %}
